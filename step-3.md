@@ -106,7 +106,7 @@ var GameManager = cc.Class({
 - 双击打开assets->prefabs->PipeGroup，将资源管理器->assets->scripts->PipeGroup拖拽到属性检查器面板，然后将层级管理器->PipeGroup->pipeTop和pipeBottom分别拖拽到属性检查器面板上的Top Pipe和Bot Pipe节点，修改数值Speed=-300，BotYRange数值X=-270，Y=-50，SpacingRange数值X=200，Y=375，然后分别双击打开层级管理器->PipeGroup下的子节点pipeTop和pipeBottom，将资源管理器->assets->sprites->background->pipe拖拽到属性检查器面板上的SpriteFrame，同时先删除PipeGroup以及子节点pipeTop和pipeBottom的BoxCollider
 ![3-4](/3-4.png)
 - 双击打开资源管理器下的Game场景，选中层级管理器->Canvas下的Game，将资源管理器->assets->scripts->GameManager拖拽到属性检查器面板
-- 选中层级管理器->Canvas下的Game，将资源管理器->assets->scripts->PipeGroupManager拖拽到属性检查器面板，然后将资源管理器->assets->prefabs->PipeGroup拖拽到属性检查器面板上的Pipe Prefab，将层级管理器->Canvas下的pipeLayer拖拽到Pipe Layer，修改数值InitPipeX=700, SpawnInterval=2
+- 选中层级管理器->Canvas下的Game，将资源管理器->assets->scripts->PipeGroupManager拖拽到属性检查器面板，然后将资源管理器->assets->prefabs->PipeGroup拖拽到属性检查器面板上的Pipe Prefab，将层级管理器->Canvas下的pipeLayer拖拽到Pipe Layer，修改数值InitPipeX=700, SpawnInterval=2。注意这里调整一下层级管理器里阶段的顺序，从上到下一依次为sky、bg、pipeLayer、ground、Game，这样才能确保地表遮盖管道下沿
 ![3-5](/3-5.png)
 - 点击预览箭头，在浏览器中预览我们创角好的Game场景和管道障碍物
 ![3-6](/3-6.png)
