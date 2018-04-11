@@ -47,7 +47,7 @@ cc.Class({
 ## 导入音效文件
 
 - 选中资源管理器->assets，右键新建文件夹musics
-- 将之前下载的美术资源assets\musics下的mp3文件拖拽到资源管理器->assets->musics文件夹下
+- 将之前下载的美术资源assets\musics下的mp3文件拖拽到资源管理器->assets->musics文件夹下（这里的gameBg.mp3在手机上播放不出来，可以自己替换一个mp3文件）
 ![7-4](/7-4.png)
 
 ## 脚本控制播放音效
