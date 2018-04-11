@@ -15,11 +15,13 @@ cc.Class({
         this.botPipe.y = botYPos;
     },
     update (dt) {
-        this.node.x += this.speed * dt;
+        if (Global.pipeManager.move) {
+            this.node.x += this.speed * dt;
 
-        var disappear = this.node.getBoundingBoxToWorld().xMax < 0;
-        if (disappear) {
-            Global.pipeManager.destroyPipe(this);
+            var disappear = this.node.getBoundingBoxToWorld().xMax < 0;
+            if (disappear) {
+                Global.pipeManager.destroyPipe(this);
+            }
         }
     }
 });

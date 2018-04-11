@@ -77,17 +77,227 @@ var GameOverMenu = cc.Class({
 
 ## 编辑GameManager脚本，实现游戏循环开始、过程、结束、重新开始
 
-- 游戏开始，初始化游戏状态、积分、卷屏状态、管道状态、绵羊状态
+- 游戏开始，初始化积分、卷屏状态、管道状态、绵羊状态
 - 游戏过程，更新积分
-- 游戏结束，更新游戏状态、显示结算界面和积分、更新卷屏状态、更新管道状态、更新绵羊状态
+- 游戏结束，显示结算界面和积分、更新卷屏状态、更新管道状态、更新绵羊状态
 - 重新开始，重新加载场景
 
 完整的代码修改如下：
 
+- Globals
+```js
+window.Global = {
+    gameManager: null,
+    scroller: null,
+    pipeManager: null,
+    sheep: null
+};
+```
 - GameManager
-
+```js
+cc.Class({
+    extends: cc.Component,
+    properties: {
+        gameOverMenu: cc.Node,
+        scoreText: cc.Label
+    },
+    onLoad () {
+        Global.gameManager = this;
+        cc.director.getCollisionManager().enabled = true;
+        this.gameOverMenu.active = false;
+        this.score = 0;
+        this.scoreText.string = this.score;
+    },
+    start () {
+        Global.scroller.startMove();
+        Global.pipeManager.startSpawn();
+        Global.sheep.startRun();
+    },
+    gainScore () {
+        this.score++;
+        this.scoreText.string = this.score;
+    },
+    gameOver () {
+        this.gameOverMenu.active = true;
+        Global.scroller.stopMove();
+        Global.pipeManager.stopSpawn();
+        Global.sheep.stopRun();
+    }
+});
+```
 - Scroller
-
+```js
+cc.Class({
+    extends: cc.Component,
+    properties: {
+        speed: 0,
+        resetX: 0
+    },
+    onLoad () {
+        Global.scroller = this;
+    },
+    startMove () {
+        this.move = true;
+    },
+    stopMove () {
+        this.move = false;
+    },
+    update (dt) {
+        if (this.move) {
+            var x = this.node.x;
+            x += this.speed * dt;
+            if (x <= this.resetX) {
+                x -= this.resetX;
+            }
+            this.node.x = x;
+        }
+    }
+});
+```
 - PipeGroupManager
+```js
+const PipeGroup = require('PipeGroup');
 
+cc.Class({
+    extends: cc.Component,
+    properties: {
+        pipePrefab: cc.Prefab,
+        pipeLayer: cc.Node,
+        initPipeX: 0,
+        spawnInterval: 0
+    },
+    onLoad () {
+        Global.pipeManager = this;
+    },
+    startSpawn () {
+        this.move = true;
+        this.spawnPipe();
+        this.schedule(this.spawnPipe, this.spawnInterval);
+    },
+    stopSpawn () {
+        this.move = false;
+        this.unschedule(this.spawnPipe);
+    },
+    spawnPipe () {
+        let pipeGroup = null;
+        if (cc.pool.hasObject(PipeGroup)) {
+            pipeGroup = cc.pool.getFromPool(PipeGroup);
+        } else {
+            pipeGroup = cc.instantiate(this.pipePrefab).getComponent(PipeGroup);
+        }
+        this.pipeLayer.addChild(pipeGroup.node);
+        pipeGroup.node.active = true;
+        pipeGroup.node.x = this.initPipeX;
+    },
+    destroyPipe (pipeGroup) {
+        pipeGroup.node.removeFromParent();
+        pipeGroup.node.active = false;
+        cc.pool.putInPool(pipeGroup);
+    }
+});
+```
+- PipeGroup
+```js
+cc.Class({
+    extends: cc.Component,
+    properties: {
+        speed: 0,
+        botYRange: cc.p(0, 0),
+        spacingRange: cc.p(0, 0),
+        topPipe: cc.Node,
+        botPipe: cc.Node
+    },
+    onEnable () {
+        let botYPos = this.botYRange.x + Math.random() * (this.botYRange.y - this.botYRange.x);
+        let space = this.spacingRange.x + Math.random() * (this.spacingRange.y - this.spacingRange.x);
+        let topYPos = botYPos + space;
+        this.topPipe.y = topYPos;
+        this.botPipe.y = botYPos;
+    },
+    update (dt) {
+        if (Global.pipeManager.move) {
+            this.node.x += this.speed * dt;
+
+            var disappear = this.node.getBoundingBoxToWorld().xMax < 0;
+            if (disappear) {
+                Global.pipeManager.destroyPipe(this);
+            }
+        }
+    }
+});
+```
 - Sheep
+```js
+cc.Class({
+    extends: cc.Component,
+    properties: {
+        maxY: 0,
+        groundY: 0,
+        gravity: 0,
+        initJumpSpeed: 0
+    },
+    onLoad () {
+        Global.sheep = this;
+        this.currentSpeed = 0;
+        this.anim = this.getComponent(cc.Animation);
+    },
+    changeState (state) {
+        this.state = state;
+        this.anim.stop();
+        this.anim.play(state);
+    },
+    jump () {
+        this.changeState('Jump');
+        this.currentSpeed = this.initJumpSpeed;
+    },
+    startRun () {
+        this.changeState('Run');
+        cc.eventManager.addListener({
+            event: cc.EventListener.TOUCH_ONE_BY_ONE,
+            onTouchBegan: function(touch, event) {
+                this.jump();
+                return true;
+            }.bind(this)
+        }, this.node);
+    },
+    stopRun () {
+        this.changeState('Dead');
+        cc.eventManager.pauseTarget(this.node);
+    },
+    onCollisionEnter (other) {
+        var group = cc.game.groupList[other.node.groupIndex];
+        if (group === 'pipe') {
+            Global.gameManager.gameOver();
+        }
+        else if (group === 'score') {
+            Global.gameManager.gainScore();
+        }
+    },
+    update (dt) {
+        switch (this.state) {
+            case 'Jump':
+                if (this.currentSpeed < 0) {
+                    this.changeState('Drop');
+                }
+                break;
+            case 'Drop':
+                if (this.node.y < this.groundY) {
+                    this.node.y = this.groundY;
+                    this.changeState('Run');
+                }
+                break;
+            case 'Dead':
+                return;
+        }
+        if (this.node.y > this.maxY) {
+            this.node.y = this.maxY;
+            this.changeState('Drop');
+        }
+        var flying = this.state === 'Jump' || this.node.y > this.groundY;
+        if (flying) {
+            this.currentSpeed -= dt * this.gravity;
+            this.node.y += dt * this.currentSpeed;
+        }
+    },
+});
+```

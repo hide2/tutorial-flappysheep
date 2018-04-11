@@ -1,26 +1,26 @@
 cc.Class({
     extends: cc.Component,
-
     properties: {
         maxY: 0,
         groundY: 0,
         gravity: 0,
-        initJumpSpeed: 0,
+        initJumpSpeed: 0
     },
-    changeState: function(state) {
+    onLoad () {
+        Global.sheep = this;
+        this.currentSpeed = 0;
+        this.anim = this.getComponent(cc.Animation);
+    },
+    changeState (state) {
         this.state = state;
         this.anim.stop();
         this.anim.play(state);
     },
-    jump: function () {
+    jump () {
         this.changeState('Jump');
         this.currentSpeed = this.initJumpSpeed;
     },
-    start () {
-        var cmanager = cc.director.getCollisionManager();
-        cmanager.enabled = true;
-        this.currentSpeed = 0;
-        this.anim = this.getComponent(cc.Animation);
+    startRun () {
         this.changeState('Run');
         cc.eventManager.addListener({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
@@ -30,16 +30,17 @@ cc.Class({
             }.bind(this)
         }, this.node);
     },
-    onCollisionEnter: function (other) {
+    stopRun () {
+        this.changeState('Dead');
+        cc.eventManager.pauseTarget(this.node);
+    },
+    onCollisionEnter (other) {
         var group = cc.game.groupList[other.node.groupIndex];
         if (group === 'pipe') {
-            this.changeState('Dead');
             Global.gameManager.gameOver();
         }
         else if (group === 'score') {
-            this.score = this.score || 0;
-            this.score++;
-            console.log(this.score);
+            Global.gameManager.gainScore();
         }
     },
     update (dt) {

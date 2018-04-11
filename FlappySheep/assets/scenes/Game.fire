@@ -1293,6 +1293,9 @@
     "_enabled": true,
     "gameOverMenu": {
       "__id__": 21
+    },
+    "scoreText": {
+      "__id__": 27
     }
   },
   {

@@ -12,8 +12,13 @@ cc.Class({
         Global.pipeManager = this;
     },
     startSpawn () {
+        this.move = true;
         this.spawnPipe();
         this.schedule(this.spawnPipe, this.spawnInterval);
+    },
+    stopSpawn () {
+        this.move = false;
+        this.unschedule(this.spawnPipe);
     },
     spawnPipe () {
         let pipeGroup = null;
@@ -26,12 +31,9 @@ cc.Class({
         pipeGroup.node.active = true;
         pipeGroup.node.x = this.initPipeX;
     },
-    destroyPipe (pipe) {
-        pipe.node.removeFromParent();
-        pipe.node.active = false;
-        cc.pool.putInPool(pipe);
-    },
-    stop () {
-        this.unschedule(this.spawnPipe);
+    destroyPipe (pipeGroup) {
+        pipeGroup.node.removeFromParent();
+        pipeGroup.node.active = false;
+        cc.pool.putInPool(pipeGroup);
     }
 });
