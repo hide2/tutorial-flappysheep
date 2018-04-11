@@ -4,7 +4,11 @@ cc.Class({
         maxY: 0,
         groundY: 0,
         gravity: 0,
-        initJumpSpeed: 0
+        initJumpSpeed: 0,
+        jumpAudio: {
+            default: null,
+            url: cc.AudioClip
+        }
     },
     onLoad () {
         Global.sheep = this;
@@ -19,6 +23,7 @@ cc.Class({
     jump () {
         this.changeState('Jump');
         this.currentSpeed = this.initJumpSpeed;
+        cc.audioEngine.playEffect(this.jumpAudio);
     },
     startRun () {
         this.changeState('Run');
