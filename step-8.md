@@ -18,3 +18,13 @@
 - 打包后在build->web-mobile目录下有一个splash.png，是游戏的启动画面背景图，我们用自己修改的png图片替换掉它即可
 - 我们将build->web-mobile目录打包压缩后部署到Nginx服务器，PC或手机浏览器打开就可以体验游戏了
 ![8-4](/8-4.png)
+
+## 发布到微信小游戏
+
+- [下载微信小游戏开发工具](https://developers.weixin.qq.com/minigame/dev/devtools/download.html)
+- 顶部菜单选择Cocos Creator->偏好设置->原生开发环境->WeChat程序路径配置小游戏开发工具路径
+![8-5](/8-5.png)
+- 顶部菜单选择项目->构建发布，选择发布平台为Wechat Game，修改你自己的appid，点击构建按钮
+![8-6](/8-6.png)
+- 构建完毕后，点击运行按钮启动小游戏开发工具，进行上传和发布
+![8-7](/8-7.png)
