@@ -23,7 +23,7 @@ cc.Class({
     jump () {
         this.changeState('Jump');
         this.currentSpeed = this.initJumpSpeed;
-        cc.audioEngine.playEffect(this.jumpAudio);
+        cc.audioEngine.play(this.jumpAudio);
     },
     startRun () {
         this.changeState('Run');

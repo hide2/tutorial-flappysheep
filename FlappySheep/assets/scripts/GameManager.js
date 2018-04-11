@@ -33,21 +33,21 @@ cc.Class({
         Global.scroller.startMove();
         Global.pipeManager.startSpawn();
         Global.sheep.startRun();
-        cc.audioEngine.playMusic(this.gameBgAudio);
+        cc.audioEngine.play(this.gameBgAudio);
     },
     gainScore () {
         this.score++;
         this.scoreText.string = this.score;
         this.scoreMain.string = this.score;
-        cc.audioEngine.playEffect(this.scoreAudio);
+        cc.audioEngine.play(this.scoreAudio);
     },
     gameOver () {
         this.gameOverMenu.active = true;
         Global.scroller.stopMove();
         Global.pipeManager.stopSpawn();
         Global.sheep.stopRun();
-        cc.audioEngine.stopMusic(this.gameBgAudio);
-        cc.audioEngine.playEffect(this.dieAudio);
-        cc.audioEngine.playEffect(this.gameOverAudio);
+        cc.audioEngine.stopAll();
+        cc.audioEngine.play(this.dieAudio);
+        cc.audioEngine.play(this.gameOverAudio);
     }
 });
