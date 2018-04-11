@@ -73,7 +73,7 @@ var GameOverMenu = cc.Class({
 - 选中层级管理器的gameover节点，将assets->scripts->GameOverMenu脚本拖拽到属性检查器面板，并将gameover->score子节点拖拽到脚本的Score节点绑定
 ![6-8](/6-8.png)
 - 选中gameover->replay按钮节点，修改Click Events为1，拖拽gameover节点，选择GameOverMenu脚本，选择restart方法
-![6-9(/6-9.png)
+![6-9](/6-9.png)
 
 ## 编辑GameManager脚本，实现游戏循环开始、过程、结束、重新开始
 

@@ -17,6 +17,8 @@ cc.Class({
         this.currentSpeed = this.initJumpSpeed;
     },
     start () {
+        var cmanager = cc.director.getCollisionManager();
+        cmanager.enabled = true;
         this.currentSpeed = 0;
         this.anim = this.getComponent(cc.Animation);
         this.changeState('Run');
@@ -27,6 +29,18 @@ cc.Class({
                 return true;
             }.bind(this)
         }, this.node);
+    },
+    onCollisionEnter: function (other) {
+        var group = cc.game.groupList[other.node.groupIndex];
+        if (group === 'pipe') {
+            this.changeState('Dead');
+            Global.gameManager.gameOver();
+        }
+        else if (group === 'score') {
+            this.score = this.score || 0;
+            this.score++;
+            console.log(this.score);
+        }
     },
     update (dt) {
         switch (this.state) {
@@ -41,6 +55,8 @@ cc.Class({
                     this.changeState('Run');
                 }
                 break;
+            case 'Dead':
+                return;
         }
         if (this.node.y > this.maxY) {
             this.node.y = this.maxY;
