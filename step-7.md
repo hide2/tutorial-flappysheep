@@ -2,7 +2,7 @@
 
 ## 添加分数
 
-- 层级管理器->Canvas，右键新建Sprite节点，命名scoreIcon，修改Position数值X=-450，Y=645，Scale数值X=-0.5，Y=0.5，将assets\sprites\sheep\sheep_run_01拖拽到SpriteFrame
+- 层级管理器->Canvas，右键新建Sprite节点，命名scoreIcon，修改Position数值X=-450，Y=645，Scale数值X=-0.5，Y=0.5，将assets->atlas->actors->sheep_run_01拖拽到SpriteFrame
 ![7-1](/7-1.png)
 - 层级管理器->Canvas->scoreIcon，右键新建Lable子节点，命名为score，修改Position数值X=-171，Y=40，Scale数值X=-3，Y=3，将assets\fonts\flappybird字体文件拖拽到Font
 ![7-2](/7-2.png)

@@ -21,7 +21,7 @@
 ## 增加绵羊碰撞死亡动画
 - 选中assets->animations，右键新建Animation Clip，命名为Dead
 - 选中层级管理器中的sheep，属性面板Animation中的Clips改为4，将assets->animations->Dead拖拽到Clips下
-- 打开动画编辑器，选择编辑Dead，修改数值Sample=10，wrapMode=Normal，属性列表里点击add property->cc.Sprite.spriteFrame，在0:00秒点击+号添加1帧，并将assets->sprites->sheep->sheep_touch_01拖拽到属性面板的Sprite Frame
+- 打开动画编辑器，选择编辑Dead，修改数值Sample=10，wrapMode=Normal，属性列表里点击add property->cc.Sprite.spriteFrame，在0:00秒点击+号添加1帧，并将assets->atlas->actors->sheep_touch_01拖拽到属性面板的Sprite Frame
 ![5-6](/5-6.png)
 
 ## 编辑碰撞脚本代码

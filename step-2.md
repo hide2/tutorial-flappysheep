@@ -16,9 +16,9 @@
 
 ## 创建背景、地面和天空
 
-- 拖拽资源管理器->assets->sprites->bg到层级管理器->Canvas，修改Position数值Y=-97，修改Size数值W=1100
+- 拖拽资源管理器->assets->sprites->background->bg到层级管理器->Canvas，修改Position数值Y=-97，修改Size数值W=1100
 ![2-3](/2-3.png)
-- 拖拽资源管理器->assets->sprites->ground到层级管理器->Canvas，修改Position数值Y=-347，修改Anchor数值Y=1，修改Size数值W=1100，H=652，Type选择SLICED，编辑Sprite Frame数值Top=48，Bottom=17
+- 拖拽资源管理器->assets->sprites->background->ground到层级管理器->Canvas，修改Position数值Y=-347，修改Anchor数值Y=1，修改Size数值W=1100，H=652，Type选择SLICED，编辑Sprite Frame数值Top=48，Bottom=17
 ![2-4](/2-4.png)
 - 层级管理器->Canvas，右键创建节点->创建渲染节点->Sprite（单色），命名为sky，修改Color数值为#0098CE，修改Position数值Y=450，修改Size数值W=1100，H=600
 ![2-5](/2-5.png)

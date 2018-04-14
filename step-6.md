@@ -9,9 +9,9 @@
 ## 创建GameOver界面
 
 - 资源管理器->assets->sprites文件夹，右键新建子文件夹ui
-- 将之前下载的美术资源assets\sprites\ui下的png文件拖拽到assets\sprites\ui文件夹下
+- 将之前下载的美术资源assets\sprites\ui下的png文件拖拽到资源管理器->assets->sprites->ui文件夹下
 ![6-2](/6-2.png)
-- 层级管理器->Canvas，右键新建Sprite节点，命名gameover，修改Size数值W=505，H=361，将assets\sprites\ui\gameoverbg拖拽到SpriteFrame
+- 层级管理器->Canvas，右键新建Sprite节点，命名gameover，修改Size数值W=505，H=361，将assets->sprites->ui->gameoverbg拖拽到SpriteFrame
 ![6-3](/6-3.png)
 - 层级管理器->Canvas->gameover，右键新建Label子节点，命名gameoverTitle，修改Position数值Y=84，Color=#DA4525，String=Game Over，FontSize=80，LineHeight=80，将assets\fonts\flappybird字体文件拖拽到Font
 ![6-4](/6-4.png)
@@ -19,7 +19,7 @@
 ![6-5](/6-5.png)
 - 层级管理器->Canvas->gameover，右键新建Label子节点，命名score，修改Position数值X=5，Y=-16，Anchor数值X=0，Color=#F3C319，String=999，FontSize=60，LineHeight=60，将assets\fonts\flappybird字体文件拖拽到Font
 ![6-6](/6-6.png)
-- 层级管理器->Canvas->gameover，右键新建Button子节点，命名replay，删除replay的Label子节点，修改Position数值Y=-107，将assets\sprites\ui\button_play拖拽到SpriteFrame，Transition=SCALE
+- 层级管理器->Canvas->gameover，右键新建Button子节点，命名replay，删除replay的Label子节点，修改Position数值Y=-107，将assets->sprites->ui->button_play拖拽到SpriteFrame，Transition=SCALE
 ![6-7](/6-7.png)
 
 ## 编辑GameOver脚本
